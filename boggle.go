@@ -2,17 +2,11 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
-)
 
-// ```ruby
-// letters = [
-//   ["r", "h", "r", "e"],
-//   ["y", "p", "c", "s"],
-//   ["w", "n", "s", "n"],
-//   ["t", "e", "g", "o"]
-// ]
-// ```
+	"github.com/whatsadebugger/algorithms-data-structures/DataStructures/trie"
+)
 
 func main() {
 
@@ -27,54 +21,41 @@ func main() {
 		panic(err)
 	}
 
+	// load up our words into the trie for fast lookups
 	s := bufio.NewScanner(f)
-
-	validWords := make([]string, 109583)
-
-	i := 0
+	words := trie.NewNode()
 
 	for s.Scan() {
-		validWords[i] = s.Text()
-		i++
+		words.Insert(s.Text())
 	}
 
-	boggle(letters, validWords)
+	boggle(letters, words)
 }
 
-func boggle(letters [][]string, validWords []string) {
-	type point struct {
-		x int
-		y int
-	}
+type point struct {
+	x int
+	y int
+}
 
-	visited := make(map[point]bool)
+var moves = []point{{0, 1}, {1, 0}, {-1, 0}, {0, -1}, {-1, -1}, {1, 1}, {-1, 1}, {1, -1}}
 
-	_ = visited
+func boggle(letters [][]string, words *trie.Node) {
 
-	moves := []point{{0, 1}, {1, 0}, {-1, 0}, {0, -1}}
+	// visited := make(map[point]struct{})
 
-	word := ""
-
-	for y := range letters {
-		for x := range letters[y] {
-			currentSquare := point{x, y}
-			visited[currentSquare] = true
-
-			word += letters[y][x]
-
-			for i, move := range moves {
-				var possibleMove point
-				possibleMove.x, possibleMove.y = currentSquare.x+move.x, currentSquare.y+move.y
-				if possibleMove.x < 0 || possibleMove.x > 3 || possibleMove.y < 0 || possibleMove.y > 3 {
-
-				} else if visited[possibleMove] == true {
-
-				} else {
-					currentSquare = possibleMove
-					word += let
-				}
-			}
+	for i := 0; i < len(letters); i++ {
+		for j := 0; j < len(letters[i]); j++ {
+			fmt.Println(letters[i][j])
+			// visited[newPoint(i, j)] = struct{}{}
 
 		}
+	}
+}
+
+// Point make points
+func newPoint(x, y int) point {
+	return point{
+		x: x,
+		y: y,
 	}
 }
