@@ -6,10 +6,11 @@ import (
 	"os"
 
 	"github.com/whatsadebugger/algorithms-data-structures/DataStructures/trie"
+	"gonum.org/v1/gonum/graph/simple"
 )
 
 func main() {
-
+	ugraph := simple.NewUndirectedGraph()
 	letters := [][]string{
 		{"r", "h", "r", "e"},
 		{"y", "p", "c", "s"},
@@ -45,9 +46,8 @@ func boggle(letters [][]string, words *trie.Node) {
 
 	for i := 0; i < len(letters); i++ {
 		for j := 0; j < len(letters[i]); j++ {
-			fmt.Println(letters[i][j])
+			// for each letter recursively find words
 			// visited[newPoint(i, j)] = struct{}{}
-
 		}
 	}
 }
